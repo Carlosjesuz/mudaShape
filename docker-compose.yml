@@ -1,0 +1,29 @@
+services:
+    laravel.test:
+        build:
+          context: '.'
+        ports:
+            - '80:80'
+        volumes:
+            - './:/var/www/html'
+        depends_on:
+            - mysql
+    mysql:
+        container_name: mudaShape-db
+        image: 'mysql/mysql-server:8.0'
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'teste123'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: 'teste'
+            MYSQL_USER: 'teste'
+            MYSQL_PASSWORD: 'teste123'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+            retries: 3
+            timeout: 5s
