@@ -32,19 +32,20 @@ class PessoaController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nome' => 'required|max:255',
-            'email' => 'required|email|unique:pessoas',
-            'cpf' => 'required|unique:pessoas',
-            'senha' => 'required|min:6',
-        ]);
+        // $validatedData = $request->validate([
+        //     'name' => 'required|max:255',
+        //     'email' => 'required|email|unique:pessoas',
+        //     'cpf' => 'required|unique:pessoas',
+        //     'senha' => 'required|min:6',
+        // ]);
 
         $pessoa = new Pessoa();
-        $pessoa->name = $validatedData['nome'];
-        $pessoa->email = $validatedData['email'];
-        $pessoa->cpf = $validatedData['cpf'];
-        $pessoa->senha = Hash::make($validatedData['usuario_id']); 
+        $pessoa->name = $request->input('name'); 
+        $pessoa->email = $request->input('email');;
+        $pessoa->cpf = $request->input('cpf');
+        $pessoa->senha = Hash::make($request->input('senha')); 
         $pessoa->save();
+        DD($pessoa);
     
         return redirect()->route('cadastro.listar')->with('success', 'Cadastro criado com sucesso!');
     }

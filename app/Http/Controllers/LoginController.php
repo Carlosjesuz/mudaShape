@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Medida;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class MedidaController extends Controller
+class LoginController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $medidas = Medida::all();
-        return view('medidas.listar', ['medidas' => $medidas]);
+        //
+        return view('login.login');
     }
 
     /**
@@ -30,22 +31,7 @@ class MedidaController extends Controller
      */
     public function store(Request $request)
     {
-        $pessoa = new Medida();
-        $pessoa->pessoa_id = $request->input('pessoa_id');
-        $pessoa->sexo1 = $request->input('sexo1');
-        $pessoa->sexo2 = $request->input('sexo2');
-        $pessoa->braco = $request->input('braco');
-        $pessoa->name = $request->input('nome');
-        $pessoa->email = $request->input('email');
-        $pessoa->cpf = $request->input('cpf');
-        $pessoa->cpf = $request->input('cpf'); 
-        $pessoa->name = $request->input('nome');
-        $pessoa->email = $request->input('email');
-        $pessoa->cpf = $request->input('cpf');
-        $pessoa->cpf = $request->input('cpf');
-        $pessoa->save();
-    
-        return redirect()->route('cadastro.listar')->with('success', 'Cadastro criado com sucesso!');
+        //
     }
 
     /**
@@ -78,5 +64,16 @@ class MedidaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    
+    public function login(Request $request){
+
+        $email= $request->email;
+        $password= Hash::make($request->senha);
+        if( Auth::attempt(['email' => $email, 'senha' => $password])){
+            return route('home');
+        }else{
+            DD("meu pau");
+        }
     }
 }

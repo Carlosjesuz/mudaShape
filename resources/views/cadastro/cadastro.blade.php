@@ -9,7 +9,7 @@
                 </div>
                 <h2 class="h2">Cadastro</h2>
                 <div class="topo10 login-input">
-                    <input type="text" name="nome" placeholder="nome" required>
+                    <input type="text" name="name" placeholder="nome" required>
                 </div>
                 <div class="topo10 login-input">
                     <input type="text" name="cpf" placeholder="CPF" required>
