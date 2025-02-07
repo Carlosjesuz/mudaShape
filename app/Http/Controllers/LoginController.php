@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Medida;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Pessoa;
 
 class LoginController extends Controller
 {
@@ -69,11 +71,17 @@ class LoginController extends Controller
     public function login(Request $request){
 
         $email= $request->email;
-        $password= Hash::make($request->senha);
-        if( Auth::attempt(['email' => $email, 'senha' => $password])){
-            return route('home');
+        $password=$request->senha;
+        
+        if( Auth::attempt(['email' => $email, 'password' => $password])){
+            $user = Auth::user(); 
+            $medidaExiste = Medida::where('user_id', $user->id)->exists();
+            if (!$medidaExiste) {
+                return view('cadastro.medidas');
+            }
+            return redirect(route('home'));
         }else{
-            DD("meu pau");
+            DD($email);
         }
     }
 }

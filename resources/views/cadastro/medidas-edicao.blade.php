@@ -1,56 +1,73 @@
 @extends('layout.master')
 @section('content')
-    <div class="container content-login">
-        <form action="" method="POST">
-
-            @csrf
-            @method('PUT') 
-
-            <div class="medida-div">
-                <h2 class="h2 topo10">Medidas</h2>
-                <div class="d-none d-flex align-items-center mb-3" >
-                    <label class="me-2">
-                        <input type="radio" name="sexo1" value="homem" >
-                        Homem
-                    </label>
-                    <label class="ms-3">
-                        <input type="radio" name="sexo2" value="mulher" >
-                        Mulher
-                    </label>
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="braco" placeholder="Biceps" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="peito" placeholder="Peitoral" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="barriga" placeholder="Abdomem" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="coxa" placeholder="Quadriceps" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="gluteo" placeholder="Gluteo" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="panturrilha" placeholder="Panturrilha" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="peso" placeholder="Peso" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="altura" placeholder="Altura" value="" >
-                </div>
-                <div class="topo10 login-input">
-                    <input type="number" name="ideda" placeholder="Idade" value="" >
-                </div>
-                <div  class="topo10 login-button bottom10">
-                    <button type="submit">Enviar</button>
+<div class="container mt-5">
+    <form action="{{ route('medidas.atualizar', Auth::id()) }}" method="POST">
+        @csrf
+        <div class="row">
+            <div class="col-md-8 ">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>braço</p>
+                            <input type="text" name="braco" value="{{ $medida->braco ?? '' }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>peito</p>
+                            <input type="text" name="peito" value="{{ $medida->peito ?? '' }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>abdome</p>
+                            <input type="text" name="barriga" value="{{ $medida->barriga ?? '' }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>quadriceps</p>
+                            <input type="text" name="coxa" value="{{ $medida->coxa ?? 'Não cadastrado' }}" >
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>gluteo</p>
+                            <input type="text" name="gluteo" value="{{ $medida->gluteo ?? '' }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>panturrilha</p>
+                            <input type="text" name="panturrilha" value="{{ $medida->panturrilha ?? '' }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>peso</p>
+                            <input type="text" name="peso" value="{{ $medida->peso ?? '' }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="p-5 border border-dark text-center tamanho-div">
+                            <p>idade</p>
+                            <input type="text" name="idade" value="{{ $medida->idade ?? '' }}" required>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
-        <script>
-        </script>
-    </div>
+            <div class="col-md-4">
+                <div class="p-3 border border-dark  text-center tamanho-card ">
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset($medida->sexo2 === 1 ? 'img/mulher.png' : 'img/homem.png') }}" alt="corpo">
+                        <p>Medidas</p>
+                    </a>
+                </div>
+            </div>
+            <div  class="login-button bottom10">
+                <button type="submit">Enviar</button>
+            </div>
+        </div>
+    </form>
+</div>
 @endsection

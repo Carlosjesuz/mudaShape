@@ -10,7 +10,7 @@ class Medida extends Model
     use HasFactory;
 
     protected $fillable = [
-        'pessoa_id',
+        'user_id',
         'sexo1',
         'sexo2',
         'braco',
@@ -24,9 +24,9 @@ class Medida extends Model
         'idade'
     ];
 
-    public function pessoa()
+    public function user()
     {
-        return $this->belongsTo(Pessoa::class);
+        return $this->belongsTo(User::class);
     }
 
 }

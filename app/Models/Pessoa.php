@@ -18,13 +18,27 @@ class Pessoa extends Authenticatable
         'senha'
     ];
 
+    protected $password = 'senha';
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($pessoa) {
+            if ($pessoa->isDirty('senha')) {
+                $pessoa->senha = bcrypt($pessoa->senha);
+            }
+        });
+    }
+
     public function medida()
     {
-        return $this->hasOne(Medida::class);
+        return $this->hasMany(Medida::class);
     }
 
     protected $hidden = [
         'password',
         'remember_token'
     ];
+
 }

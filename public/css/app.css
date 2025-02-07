@@ -44,12 +44,12 @@ time, mark, audio, video {
     outline: none;
     font-size: 15px;
     border-radius: 5px;
-    width: 100%; /* Adiciona isso para garantir que o input ocupe todo o espaço disponível */
-    padding-right: 35px; /* Adiciona isso para evitar que o texto fique sobre o ícone */
+    width: 100%; 
+    padding-right: 35px; 
 }
 
 .login-input {
-    position: relative; /* Adiciona isso para posicionar o ícone relativo ao input */
+    position: relative; 
     display: flex;
     align-items: center;
 }
@@ -96,7 +96,7 @@ time, mark, audio, video {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 200px; /* Defina o tamanho máximo da célula */
+    max-width: 200px; 
 }
 
 body {
@@ -104,7 +104,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* Estilizando o cabeçalho */
 header {
     display: flex;
     align-items: center;
@@ -115,7 +114,6 @@ header {
 }
 
 .default-header {
-    /* Estilos padrão */
     background-color: #ffffff;
     border-bottom: none;
 }
@@ -125,11 +123,10 @@ header {
     border-bottom: 2px solid #ddd;
 }
 
-/* Estilizando o círculo para foto */
 .profile-section {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espaço entre a foto e o texto */
+    gap: 15px; 
 }
 
 .profile-photo {
@@ -208,4 +205,15 @@ div.tamanho-card{
     padding: 40px;
     border-radius: 15px;
     color: white;
+}
+
+div.tamanho-div{
+
+    max-width: 90%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    border-radius: 10px;
+    background-color: #ffcc00;
+    color: #007bff;
 }

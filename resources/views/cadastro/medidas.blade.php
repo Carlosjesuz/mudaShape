@@ -1,20 +1,19 @@
 @extends('layout.master')
 @section('content')
     <div class="container content-login">
-        <form action="" method="POST">
+            <form action="{{ route('medidas.store') }}" method="POST">
 
             @csrf
-            @method('PUT')
 
             <div class="medida-div">
                 <h2 class="h2 topo10">Medidas</h2>
                 <div class="d-flex align-items-center mb-3">
                     <label class="me-2">
-                        <input type="radio" name="sexo1" value="homem" required>
+                        <input type="radio" name="sexo1" value="homem" >
                         Homem
                     </label>
                     <label class="ms-3">
-                        <input type="radio" name="sexo2" value="mulher" required>
+                        <input type="radio" name="sexo2" value="mulher" >
                         Mulher
                     </label>
                 </div>
@@ -51,6 +50,22 @@
             </div>
         </form>
         <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const sexoHomem = document.querySelector('input[name="sexo1"]');
+                const sexoMulher = document.querySelector('input[name="sexo2"]');
+
+                sexoHomem.addEventListener("change", function () {
+                    if (this.checked) {
+                        sexoMulher.checked = false;
+                    }
+                });
+
+                sexoMulher.addEventListener("change", function () {
+                    if (this.checked) {
+                        sexoHomem.checked = false;
+                    }
+                });
+            });
         </script>
     </div>
 @endsection

@@ -9,7 +9,8 @@
               </div>
               <div class="profile-text">
                   <div class="welcome-text">Bem-vindo!</div>
-                  <a href="#" class="logout-link">Sair</a>
+                  <div class="welcome-text">{{ Auth::user()->name ?? 'Usuário' }}</div>
+                  <a href="{{route('logout2')}}" class="logout-link">Sair</a>
               </div>
             </div>
           </ul>

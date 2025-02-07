@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pessoa;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class PessoaController extends Controller
 {
@@ -15,7 +17,7 @@ class PessoaController extends Controller
     public function index()
     {
        
-        $pessoas = Pessoa::all();
+        $pessoas = User::all();
         return view('cadastro.listar', ['pessoas' => $pessoas]);
     }
 
@@ -32,6 +34,20 @@ class PessoaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $data=$request->all();
+        dd($data);
+        try {
+            $data=$request->all();
+            dd($data);
+            //User::create(["name"=>])
+        }catch(
+            \Exception $e
+            
+        ){
+            Log::error($e);
+            dd($e);
+        }
         // $validatedData = $request->validate([
         //     'name' => 'required|max:255',
         //     'email' => 'required|email|unique:pessoas',
@@ -39,13 +55,12 @@ class PessoaController extends Controller
         //     'senha' => 'required|min:6',
         // ]);
 
-        $pessoa = new Pessoa();
-        $pessoa->name = $request->input('name'); 
-        $pessoa->email = $request->input('email');;
-        $pessoa->cpf = $request->input('cpf');
-        $pessoa->senha = Hash::make($request->input('senha')); 
-        $pessoa->save();
-        DD($pessoa);
+        // $pessoa = new User();
+        // $pessoa->name = $request->input('name'); 
+        // $pessoa->email = $request->input('email');
+        // //$pessoa->cpf = $request->input('cpf');
+        // $pessoa->password = Hash::make($request->input('password')); 
+        // $pessoa->save();
     
         return redirect()->route('cadastro.listar')->with('success', 'Cadastro criado com sucesso!');
     }
@@ -63,7 +78,7 @@ class PessoaController extends Controller
      */
     public function edit(string $id)
     {
-        $pessoas = Pessoa::findOrFail($id);
+        $pessoas = User::findOrFail($id);
         return view('cadastro.editar', ['pessoas' => $pessoas]);
     }
 
@@ -80,29 +95,29 @@ class PessoaController extends Controller
         //     'senha' => 'nullable|string|min:6|confirmed', // senha deve ser igual a confirmaSenha
         // ]);
 
-    $pessoa = Pessoa::findOrFail($id);
+        $pessoa = User::findOrFail($id);
 
-    if ($request->filled('senhaAntiga')) {
-        if (!password_verify($request->senhaAntiga, $pessoa->senha)) {
-            return redirect()
-                ->back()
-                ->withErrors(['senhaAntiga' => 'A senha antiga não está correta.']);
+        if ($request->filled('senhaAntiga')) {
+            if (!password_verify($request->senhaAntiga, $pessoa->senha)) {
+                return redirect()
+                    ->back()
+                    ->withErrors(['senhaAntiga' => 'A senha antiga não está correta.']);
+            }
+
+            if ($request->filled('senha')) {
+                $pessoa->senha = bcrypt($request->senha);
+            }
         }
 
-        if ($request->filled('senha')) {
-            $pessoa->senha = bcrypt($request->senha);
-        }
-    }
+        $pessoa->name = $request->nome;
+        $pessoa->cpf = $request->cpf;
+        $pessoa->email = $request->email;
+        $pessoa->edit();
 
-    $pessoa->name = $request->nome;
-    $pessoa->cpf = $request->cpf;
-    $pessoa->email = $request->email;
-    $pessoa->save();
-
-    return redirect()
-        ->route('cadastro.listar')
-        ->with('success', 'Dados atualizados com sucesso!')
-        ->with('error', 'A senha antiga não está correta.');
+        return redirect()
+            ->route('cadastro.listar')
+            ->with('success', 'Dados atualizados com sucesso!')
+            ->with('error', 'A senha antiga não está correta.');
     }
 
     /**
@@ -110,7 +125,7 @@ class PessoaController extends Controller
      */
     public function destroy(string $id)
     {
-        $pessoa = Pessoa::find($id);
+        $pessoa = User::find($id);
 
         if (!$pessoa) {
             return redirect()->route('cadastro.listar')->with('error', 'Pessoa não encontrada.');
