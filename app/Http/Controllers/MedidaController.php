@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Medida;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MedidaController extends Controller
 {
@@ -60,13 +61,10 @@ class MedidaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        // $medida = Medida::where('user_id', Auth::id())->latest()->first();
-        // return view('cadastro.medidas-edicao', compact('medida'));
-        // $medida = Medida::findOrFail($id);
-        // return view('cadastro.medidas-edicao', ['medida' => $medida]);
-        $medida = Medida::where('user_id', $id)->latest()->first();
+        $userId= Auth::id();
+        $medida = Medida::where('user_id', $userId)->latest()->first();
         if (!$medida) {
             return redirect()->route('home')->with('error', 'Nenhuma medida encontrada para este usuário.');
         }
@@ -76,9 +74,32 @@ class MedidaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        $medidaAntiga = Medida::where('user_id', $id)->latest()->first();
+        $validacao = $request->validate([
+            'braco' => ['nullable', 'numeric', 'between:10,80'], //  10cm e 80cm
+            'peito' => ['nullable', 'numeric', 'between:30,200'],
+            'barriga' => ['nullable', 'numeric', 'between:30,200'],
+            'coxa' => ['nullable', 'numeric', 'between:20,100'],
+            'gluteo' => ['nullable', 'numeric', 'between:20,150'],
+            'panturrilha' => ['nullable', 'numeric', 'between:10,60'],
+            'peso' => ['required', 'numeric', 'between:20,300'], // 20kg e 300kg
+            'idade' => ['required', 'integer', 'between:10,90'], // 10 e 90 anos
+        ],[
+            'braco.between'=>"O braço precisa ter de 10cm até 80cm",
+            'peito.between'=>"O braço precisa ter de 10cm até 80cm",
+            'barriga.between'=>"O braço precisa ter de 10cm até 80cm",
+            'coxa.between'=>"O braço precisa ter de 10cm até 80cm",
+            'gluteo.between'=>"O braço precisa ter de 10cm até 80cm",
+            'panturrilha.between'=>"O braço precisa ter de 10cm até 80cm",
+            'peso.between'=>"O braço precisa ter de 10cm até 80cm",  
+            'peso.between'=>"O braço precisa ter de 10cm até 80cm"     
+        ]);
+
+        
+
+        $userId= Auth::id();
+        $medidaAntiga = Medida::where('user_id', $userId)->latest()->first();
 
         $medida = new Medida();
         $medida->user_id = Auth::id();

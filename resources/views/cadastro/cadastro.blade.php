@@ -11,9 +11,9 @@
                 <div class="topo10 login-input">
                     <input type="text" name="name" placeholder="nome" required>
                 </div>
-                <div class="topo10 login-input">
+                {{-- <div class="topo10 login-input">
                     <input type="text" name="cpf" placeholder="CPF" required>
-                </div>
+                </div> --}}
                 <div class="topo10 login-input">
                     <input type="email" name="email" placeholder="E-mail" required>
                 </div>

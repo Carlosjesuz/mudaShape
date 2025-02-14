@@ -35,19 +35,6 @@ class PessoaController extends Controller
     public function store(Request $request)
     {
 
-        $data=$request->all();
-        dd($data);
-        try {
-            $data=$request->all();
-            dd($data);
-            //User::create(["name"=>])
-        }catch(
-            \Exception $e
-            
-        ){
-            Log::error($e);
-            dd($e);
-        }
         // $validatedData = $request->validate([
         //     'name' => 'required|max:255',
         //     'email' => 'required|email|unique:pessoas',
@@ -55,12 +42,12 @@ class PessoaController extends Controller
         //     'senha' => 'required|min:6',
         // ]);
 
-        // $pessoa = new User();
-        // $pessoa->name = $request->input('name'); 
-        // $pessoa->email = $request->input('email');
-        // //$pessoa->cpf = $request->input('cpf');
-        // $pessoa->password = Hash::make($request->input('password')); 
-        // $pessoa->save();
+        $pessoa = new User();
+        $pessoa->name = $request->input('name'); 
+        $pessoa->email = $request->input('email');
+        //$pessoa->cpf = $request->input('cpf');
+        $pessoa->password = Hash::make($request->input('password')); 
+        $pessoa->save();
     
         return redirect()->route('cadastro.listar')->with('success', 'Cadastro criado com sucesso!');
     }
@@ -110,7 +97,7 @@ class PessoaController extends Controller
         }
 
         $pessoa->name = $request->nome;
-        $pessoa->cpf = $request->cpf;
+        //$pessoa->cpf = $request->cpf;
         $pessoa->email = $request->email;
         $pessoa->edit();
 

@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <a href="{{ route('medidas.editar', Auth::id()) }}">
+            <a href="{{ route('medidas.editar') }}">
                 <div class="p-3 border border-dark  text-center tamanho-card ">
                     <img src="{{ asset($medida->sexo2 === 1 ? 'img/mulher.png' : 'img/homem.png') }}" alt="corpo">
                     <p>Medidas</p>

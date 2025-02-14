@@ -16,9 +16,9 @@
                 <div  class="topo10 login-button bottom10">
                     <button>Enviar</button>
                 </div>
-                <p onclick="window.location.href='/cadastro'" class="btn-cadastro">
+                <a href="{{ route('cadastro') }}" class="btn-cadastro">
                     Cadastre-se
-                </p>
+                </a>
             </div>
         </form>
     </div>
